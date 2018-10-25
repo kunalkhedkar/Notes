@@ -10,8 +10,8 @@ Eg. add, addAll, remove, removeAll, clear, retainAll(e) `except e all element`, 
 Note: Collection interface doesn't contain any method to retrieve data.
 
 ```java
-								Object
-								/     \
+				    Object
+				   /     \
                                   /       \
                                Array     Collections 
 ```
@@ -568,7 +568,7 @@ The initial capacity means the number of buckets when hashtable  is created. The
 **Load Factor** :
 
 ```javascript
-  				Number of stored elements in the table
+  		  Number of stored elements in the table
    load factor = -----------------------------------------
                         Size of the hash table 
 ```
@@ -908,18 +908,18 @@ add, addFirst, addLast, clear, size, clone, getFirst, getLast, isEmpty, offer, O
 The java.util.Map interface represents a **mapping** between a **key** and a **value**. The Map interface is not a subtype of the Collection interface. Therefore it behaves a bit different from the rest of the collection types. 
 
 ```java
-							 <Map>
-							/  |  \
+						    <Map>
+						    /  |  \
 						   /   |   \
 						  /    |   <SortedMap>
 						 /     |     \
 						/      |    <NaviagableMap>
-					   /       |       \
-					  /        |        \
-				HashTable    HashMap    TreeMap
-							   |
-							   |
-						LinkedHashMap 
+					      /        |      	\
+					     /         |       	 \
+				         HashTable   HashMap    TreeMap
+							  	   |
+							           |
+						             LinkedHashMap 
 ```
 
 
@@ -1264,7 +1264,7 @@ Because for 1000 write operation there will be 1000 copy of arraylist.
 ## **CopyOnWriteArraySet**
 
 ```
- 									collection   (I)
+ 					collection   (I)
                                             |
                                            Set      (I)
                                             |
