@@ -37,7 +37,7 @@ annotationProcessor "android.arch.persistence.room:compiler:1.0.0-beta2"
 
 **There are three major components in Room:** 
 
-- **Entity **
+- **Entity**
 
   Entity represent data for a single row, class need to be annotate with @Entity
 
@@ -45,7 +45,7 @@ annotationProcessor "android.arch.persistence.room:compiler:1.0.0-beta2"
 
   Data Access Object defines the method that access the database 
 
-- **Database **
+- **Database**
 
   Database is a holder class that use annotation to define the list of entities and database version. this class content define the list of DAO
 
