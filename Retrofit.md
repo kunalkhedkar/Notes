@@ -1322,5 +1322,27 @@ public class RetrofitHelper {
 }
 
 ```
+calling example will be
+   ```java
+        RetrofitHelper.createService(SyncClient.class).fullSync(deviceIdReqModel).enqueue(new Callback<FullSyncResModel>() {
+            @Override
+            public void onResponse(Call<FullSyncResModel> call, Response<FullSyncResModel> response) {
+                Toast.makeText(LoginActivity.this, "got response", Toast.LENGTH_SHORT).show();
 
+                Log.d(TAG, "onResponse: " + response.body());
+
+                if (response.body() != null) {
+                    storeFullSyncData(response.body());
+                } else {
+                    Toast.makeText(LoginActivity.this, "FullSync response null", Toast.LENGTH_SHORT).show();
+                }
+
+            }
+
+            @Override
+            public void onFailure(Call<FullSyncResModel> call, Throwable t) {
+                Log.d(TAG, "onFailure: " + t.getMessage());
+            }
+        });
+   ```
 
