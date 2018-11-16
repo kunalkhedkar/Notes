@@ -1249,3 +1249,78 @@ public class ServiceGenerator {
 }
 ```
 
+Retrofit generic singleton class 
+```java
+import android.content.Context;
+
+import com.eagleeyesystems.kot.BuildConfig;
+import com.eagleeyesystems.kot.util.SharedPrefUtil;
+
+import okhttp3.OkHttpClient;
+import okhttp3.logging.HttpLoggingInterceptor;
+import retrofit2.Retrofit;
+import retrofit2.converter.gson.GsonConverterFactory;
+
+public class RetrofitHelper {
+
+
+    /** Initialize IP at application class by calling updateServerIP method */
+    private static String IP = "";
+    private static String BASE_URL = "";
+
+    private static Retrofit retrofit = null;
+    //    private static final String BASE_URL = "http://"+IP+"/WebService/Service1.svc/";
+
+    public static void updateServerIP(Context context, String ip) {
+        if (ip != null) {
+            IP = ip;
+            BASE_URL = "http://" + IP + "/WebService/WebService.svc/";
+            SharedPrefUtil.save(context, SharedPrefUtil.SERVER_IP_KEY, ip);
+            // to assign new base_url with new ip, creating new retrofit object
+            retrofit=null;
+            buildRetrofitObject();
+        }
+    }
+
+    private RetrofitHelper() {
+
+    }
+
+    public static <S> S createService(Class<S> serviceClass) {
+
+        if (retrofit == null) {
+            retrofit = buildRetrofitObject();
+        }
+
+        return retrofit.create(serviceClass);
+    }
+
+
+    private static synchronized Retrofit buildRetrofitObject() {
+
+        if (retrofit == null) {
+            OkHttpClient.Builder okHttpClintBuilder = new OkHttpClient.Builder();
+
+            HttpLoggingInterceptor httpLoggingInterceptor = new HttpLoggingInterceptor();
+            httpLoggingInterceptor.setLevel(HttpLoggingInterceptor.Level.BODY);
+
+            // log only in debug apk
+            if (BuildConfig.DEBUG) {
+                okHttpClintBuilder.addInterceptor(httpLoggingInterceptor);
+            }
+
+            Retrofit.Builder builder = new Retrofit.Builder()
+                    .baseUrl(BASE_URL)
+                    .client(okHttpClintBuilder.build())
+                    .addConverterFactory(GsonConverterFactory.create());
+
+            return builder.build();
+
+        } else
+            return retrofit;
+    }
+}
+
+```
+
+
