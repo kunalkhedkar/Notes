@@ -1,6 +1,43 @@
-operator
-Kotlin Android Extensions not caching the views - better way
-Vetoable
+KOTLIN FEATURS
+
+	1)	Extension function:
+
+	2)	High order function
+			-	If your function accepts function as a parameter or returns function as a result than it’s called high order function
+			-	fun addValue(operation:(Int,Int) -> Int):Int {
+				    return operation(10,20)
+				}
+				addValue{num1,num2 -> num1 * num2} //This will print 200
+
+	3)	Inter-operable with java
+			-	
+	4)	Null safety
+			-	? operater
+			-	scope functions like : let 
+
+	5) Smart cast 
+			-	val n:Any = "Hello"
+				when(n) {
+				    is String -> n.length
+				    is Int -> n.inc()
+				}		
+
+			-	if(data!=null){
+					// here data becomes non-nullable type
+				}
+
+	6) Default and named arguments
+		-	default argumet is not in java
+		-	name argument introduce in java-8
+
+
+	7) Multi-value return from function
+		-	using pair,triple 
+		-	Pair<String,Integer> data    => data.first and data.second
+
+	8)	Data class
+
+	9)	Object class
 
 
 This data class auto-generates all the fields and property accessors, as well as some
