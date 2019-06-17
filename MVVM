@@ -1,0 +1,39 @@
+---> MVVM is one of the architectural patterns
+
+	Model
+		-	Model represents the data and business logic of the app
+
+	ViewModel
+		-	ViewModel interacts with model and also prepares observable(s) that can be observed by a View
+		-	decouple it from the View
+		-	ViewModel should not be aware about the view who is interacting with.
+
+	View
+		-	role of view is to observe a viewModel observable to update UI
+
+---------------------------------------------------------------------------------------------
+
+---> MVP
+
+	Model
+		-	Contains a data provider and the code to fetch and update the data
+
+	view
+		-	It contains only the UI and it does not contain any logic or knowledge of the data displayed
+		-	In typical implementations the view components in MVP
+
+	presenter
+		-	The presenter triggers the business logic and tells the view when to update
+
+---------------------------------------------------------------------------------------------
+
+---> MVVM vs MVP
+
+	mvvm 	- MVVM uses data binding and is therefore a more event driven architecture.
+	mvp 	- its not
+
+	mvvm 	- MVVM can map many views to one view model 
+	mvp 	- MVP typically has a one to one mapping between the presenter and the view
+
+	mvvm 	- In MVVM the view model has no reference to the view
+	mvp 	-  MVP the view knows the presenter	
