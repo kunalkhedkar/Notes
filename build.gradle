@@ -1,0 +1,108 @@
+apply plugin: 'com.android.application'
+
+//  1. how to keep flavor specific code separate
+//  2. how to use code from one flavor to another flavor
+//  3. how to add flavor specific dependencies
+//  Android-Developer link : https://developer.android.com/studio/build/build-variants
+
+android {
+    compileSdkVersion 28
+    defaultConfig {
+        applicationId "com.example.multiflavorsdemo"
+        minSdkVersion 15
+        targetSdkVersion 28
+        versionCode 1
+        versionName "1.0"
+        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+    }
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+    }
+
+    flavorDimensions "type"
+
+//    we have total 4 flavors here
+//        -   sbq
+//        -   sbx
+//        -   declare
+//        -   full   - [combinations of sbq or sbx or declare]
+
+    productFlavors {
+        sbq {
+            applicationId 'com.example.multiflavorsdemo.sbq'
+        }
+
+        sbx {
+            applicationId 'com.example.multiflavorsdemo.sbx'
+        }
+
+        declare {
+            applicationId 'com.example.multiflavorsdemo.declare'
+        }
+        full {
+            applicationId 'com.example.multiflavorsdemo.full'
+        }
+    }
+
+
+// part - 1 : how to keep flavor specific code separate
+/*  If we want to keep flavor specific code separate we need to create new directory in our src folder with same name as flavor
+    Eg. here we want to create separate code flavor for sbq, so we will create new new directory in our src folder with name "sbq" */
+
+
+// part - 2 :how to use code from one flavor to another flavor
+/*    let say we have a flavor called full which contains combinations of sbq and sbx flavor and we need to share code from sbq and sbx to flavor full
+    for that we can use 'sourceSets' section where we can define which src can use by which flavor
+    - By default we need src of main - we include src java-res-assets path to every flavor
+    - Now we need to share sbq and sbx code to flavor full so we add src-directories of sbq and sbx in flavor full */
+
+
+    sourceSets {
+        main {
+            java.srcDirs = ['src/main/java']
+            res.srcDirs = ['src/main/res']
+            assets.srcDirs = ['src/main/assets']
+        }
+
+        sbq {
+            java.srcDirs = ['src/main/java', 'src/sbq/java']
+            res.srcDirs = ['src/main/res', 'src/sbq/res']
+            assets.srcDirs = ['src/main/assets', 'src/sbq/assets']
+        }
+
+        sbx {
+            java.srcDirs = ['src/main/java', 'src/sbx/java']
+            res.srcDirs = ['src/main/res', 'src/sbx/res']
+            assets.srcDirs = ['src/main/assets', 'src/sbx/assets']
+        }
+
+        // full flavor src config
+        full {
+            java.srcDirs = ['src/main/java', 'src/sbq/java', 'src/sbx/java','src/full/java']
+            res.srcDirs = ['src/main/res', 'src/sbq/res', 'src/sbx/res','src/full/res']
+            assets.srcDirs = ['src/main/assets', 'src/sbq/assets','src/sbx/assets', 'src/full/assets']
+        }
+    }
+
+
+}
+
+dependencies {
+    implementation fileTree(include: ['*.jar'], dir: 'libs')
+    implementation 'com.android.support:appcompat-v7:28.0.0'
+    implementation 'com.android.support.constraint:constraint-layout:1.1.3'
+    implementation 'com.android.support:design:28.0.0'
+    testImplementation 'junit:junit:4.12'
+    androidTestImplementation 'com.android.support.test:runner:1.0.2'
+    androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.2'
+    implementation project(':wow')
+
+
+//  part 3 :how to add flavor specific dependencies
+//  If we want to add dependencies only specific to full flavors we need to add <flavor> +  Implementation
+
+    fullImplementation 'com.github.bumptech.glide:glide:4.9.0'
+}
